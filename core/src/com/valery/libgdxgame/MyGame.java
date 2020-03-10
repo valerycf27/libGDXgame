@@ -42,7 +42,7 @@ public class MyGame implements Screen {
     Sound sonidoDisparo;
 
 
-    public MyGame(Juego juego, Array<TextureRegion> textureRegionArrayProtaDerecha, Array<TextureRegion> textureRegionArrayProtaIzquierda) {
+    public MyGame(Juego juego, Array<TextureRegion> textureRegionArrayProtaDerecha, Array<TextureRegion> textureRegionArrayProtaIzquierda , int vida, int velocidad) {
         this.juego = juego;
 
         this.textureRegionArrayProtaDerecha = textureRegionArrayProtaDerecha;
@@ -53,7 +53,7 @@ public class MyGame implements Screen {
         enemigoArray = new Array<>();
         powerUpArray = new Array<>();
 
-        prota = new Prota(2, 5, new Vector2(Constantes.ANCHO_PANTALLA / 2f, 0), textureRegionArrayProtaDerecha, textureRegionArrayProtaIzquierda);
+        prota = new Prota(vida, velocidad, new Vector2(Constantes.ANCHO_PANTALLA / 2f, 0), textureRegionArrayProtaDerecha, textureRegionArrayProtaIzquierda);
 
         siguienteEnemigo = Prota.MIN_GENERAR_ENEMIGOS;
         ultimoEnemigo = TimeUtils.millis();

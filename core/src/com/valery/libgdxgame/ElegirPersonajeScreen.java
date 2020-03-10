@@ -54,7 +54,10 @@ public class ElegirPersonajeScreen implements Screen {
                 textureRegionArrayProtaIzquierda.add(new Sprite(new Texture(Gdx.files.internal("Animaciones/protaVerde2R.png"))));
                 textureRegionArrayProtaIzquierda.add(new Sprite(new Texture(Gdx.files.internal("Animaciones/protaVerde3R.png"))));
 
-                juego.setScreen(new MyGame(juego, textureRegionArrayProtaDerecha, textureRegionArrayProtaIzquierda));
+                int vida = 2;
+                int velocidad = 5;
+
+                juego.setScreen(new MyGame(juego, textureRegionArrayProtaDerecha, textureRegionArrayProtaIzquierda, vida, velocidad));
                 VisUI.dispose();
             }
         });
@@ -73,7 +76,10 @@ public class ElegirPersonajeScreen implements Screen {
                 textureRegionArrayProtaIzquierda.add(new Sprite(new Texture(Gdx.files.internal("Animaciones/Minotauro/Minotaur2I.png"))));
                 textureRegionArrayProtaIzquierda.add(new Sprite(new Texture(Gdx.files.internal("Animaciones/Minotauro/Minotaur3I.png"))));
 
-                juego.setScreen(new MyGame(juego, textureRegionArrayProtaDerecha, textureRegionArrayProtaIzquierda));
+                int vida = 6;
+                int velocidad = 6;
+
+                juego.setScreen(new MyGame(juego, textureRegionArrayProtaDerecha, textureRegionArrayProtaIzquierda, vida, velocidad));
                 VisUI.dispose();
             }
         });
@@ -92,7 +98,10 @@ public class ElegirPersonajeScreen implements Screen {
                 textureRegionArrayProtaIzquierda.add(new Sprite(new Texture(Gdx.files.internal("Animaciones/Vikingo/vick2I.png"))));
                 textureRegionArrayProtaIzquierda.add(new Sprite(new Texture(Gdx.files.internal("Animaciones/Vikingo/vick3I.png"))));
 
-                juego.setScreen(new MyGame(juego, textureRegionArrayProtaDerecha, textureRegionArrayProtaIzquierda));
+                int vida = 4;
+                int velocidad = 5;
+
+                juego.setScreen(new MyGame(juego, textureRegionArrayProtaDerecha, textureRegionArrayProtaIzquierda, vida, velocidad));
             }
         });
 
