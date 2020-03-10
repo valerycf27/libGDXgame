@@ -11,6 +11,8 @@ public class Prota extends Personaje{
 
     public static int CADENCIA = 500;
     public static int TIEMPO_RECARGA = 2000;
+    public static int TIEMPO_MIN_POCIONES = 5000;
+    public static int TIEMPO_MAX_POCIONES = 8000;
     public static int BALAS_CARGADOR = 10;
     private int cargador;
     private boolean puedeDisparar;
@@ -23,6 +25,8 @@ public class Prota extends Personaje{
         super(vida,velocidad, posicion, textureRegionArray);
         inmune = false;
         puntos = 0;
+        puedeDisparar=true;
+        cargador = BALAS_CARGADOR;
     }
 
     public int getPuntos() {

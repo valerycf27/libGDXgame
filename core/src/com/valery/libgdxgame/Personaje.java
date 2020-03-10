@@ -17,7 +17,7 @@ public class Personaje {
     private Vector2 posicion;
     public Rectangle rectangulo;
 
-    public static final int MIN_GENERAR_ENEMIGOS = 3000;
+    public static final int MIN_GENERAR_ENEMIGOS = 1000;
 
     private Animation animacionDerecha, animacionIzquierda, animacionArriba, animacionAbajo;
     private Array<TextureRegion> textureRegionArrayDerecha = new Array<>();

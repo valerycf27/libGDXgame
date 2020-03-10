@@ -3,6 +3,8 @@ package com.valery.libgdxgame;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -24,20 +26,36 @@ public class SegundoNivel implements Screen {
 
     boolean lucha;
 
+    Vector2 tmpVector;
+
+    Sound sonidoDisparo;
+    Music musica;
+
     public SegundoNivel(Juego juego, Prota prota) {
         this.juego = juego;
         this.prota = prota;
 
         inicializarArraysTexturas();
         float posX = Constantes.ANCHO_PANTALLA / 2f - textureRegionArrayBoss.get(0).getRegionWidth() / 2f;
-        boss = new Enemigo(15, 4, new Vector2(posX, Constantes.ALTO_PANTALLA), textureRegionArrayBoss);
+        boss = new Enemigo(3, 2, new Vector2(posX, Constantes.ALTO_PANTALLA), textureRegionArrayBoss);
 
-        prota.setPosicion(new Vector2(Constantes.ANCHO_PANTALLA/2f, 0));
+        prota.setPosicion(new Vector2(Constantes.ANCHO_PANTALLA / 2f, 0));
 
         balasArrayprota = new Array<>();
 
         ultimoDisparoBoss = TimeUtils.millis();
         lucha = false;
+        tmpVector = new Vector2();
+
+        sonidoDisparo = Gdx.audio.newSound(Gdx.files.internal("Sonido/disparo.mp3"));
+        musica = Gdx.audio.newMusic(Gdx.files.internal("Sonido/item.wav"));
+
+        if (ConfigurationManager.isSoundEnabled()) {
+            musica.setLooping(true);
+            musica.play();
+        }
+
+
     }
 
     private void inicializarArraysTexturas() {
@@ -76,14 +94,10 @@ public class SegundoNivel implements Screen {
             if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                 prota.estado = Personaje.Estados.DERECHA;
                 prota.moverDerecha();
-                boss.estado = Personaje.Estados.DERECHA;
-                boss.moverDerecha();
             }
             if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
                 prota.estado = Personaje.Estados.IZQUIERDA;
                 prota.moverIzquierda();
-                boss.estado = Personaje.Estados.IZQUIERDA;
-                boss.moverIzquierda();
             }
             if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
                 prota.estado = Personaje.Estados.ARRIBA;
@@ -92,8 +106,6 @@ public class SegundoNivel implements Screen {
             if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
                 prota.estado = Personaje.Estados.ABAJO;
                 prota.moverAbajo();
-                boss.estado = Personaje.Estados.ABAJO;
-                boss.moverAbajo();
             }
             if (Gdx.input.isKeyPressed(Input.Keys.R)) {
                 prota.setPuedeDisparar(false);
@@ -112,22 +124,21 @@ public class SegundoNivel implements Screen {
     }
 
     private void disparar() {
-        if (TimeUtils.millis() - prota.getMomentoUltimoDisparo() > prota.CADENCIA) {
+        if (TimeUtils.millis() - prota.getMomentoUltimoDisparo() > Prota.CADENCIA) {
             float posX = prota.getPosicion().x + prota.getTexturaActual().getRegionWidth() / 2f - textureRegionArrayBala.get(0).getRegionWidth();
             float posY = prota.getPosicion().y + prota.getTexturaActual().getRegionHeight();
             Bala bala = new Bala(10, new Vector2(posX, posY), textureRegionArrayBala);
             bala.estado = Personaje.Estados.ABAJO;
             balasArrayprota.add(bala);
             if (ConfigurationManager.isSoundEnabled())
-                //sonidoDisparo.play();
-                prota.setCargador(prota.getCargador() - 1);
+                sonidoDisparo.play();
+            prota.setCargador(prota.getCargador() - 1);
             prota.setMomentoUltimoDisparo(TimeUtils.millis());
             if (prota.getCargador() <= 0) {
                 prota.setPuedeDisparar(false);
                 prota.setMomentoUltimaRecarga(TimeUtils.millis());
             }
         }
-
     }
 
     private void comprobarLimitesPantalla() {
@@ -155,21 +166,32 @@ public class SegundoNivel implements Screen {
         if (boss.getPosicion().y < 0)
             boss.setPosicion(new Vector2(boss.getPosicion().x, 0));
 
-
         for (Bala bala : balasArrayprota)
             if (bala.getPosicion().y > Constantes.ALTO_PANTALLA)
                 balasArrayprota.removeValue(bala, true);
     }
 
     private void moverNPCs(float dt) {
-
-        if (boss.getPosicion().y > Constantes.ALTO_PANTALLA * 3 / 4) {
-            boss.estado = Personaje.Estados.ABAJO;
-            boss.actualizar(dt);
+        boss.actualizar(dt);
+        if (!lucha && boss.getPosicion().y > Constantes.ALTO_PANTALLA * 3 / 4f) {
             boss.moverAbajo();
         } else {
             lucha = true;
-            //TODO MOVER AL JEFE
+            if (prota.estado != Personaje.Estados.QUIETO) {
+                if (prota.getPosicion().y >= boss.getPosicion().y) {
+                    if (prota.getPosicion().x >= boss.getPosicion().x) {
+                        boss.mover(new Vector2(1, 1));
+                    } else {
+                        boss.mover(new Vector2(-1, 1));
+                    }
+                } else {
+                    if (prota.getPosicion().x >= boss.getPosicion().x) {
+                        boss.mover(new Vector2(1, -1));
+                    } else {
+                        boss.mover(new Vector2(-1, -1));
+                    }
+                }
+            }
         }
 
         for (Bala bala : balasArrayprota) {
@@ -185,9 +207,14 @@ public class SegundoNivel implements Screen {
             if (bala.rectangulo.overlaps(boss.rectangulo)) {
                 balasArrayprota.removeValue(bala, true);
                 boss.setVida(boss.getVida() - 1);
+                if(boss.getVida() == 0){
+                    juego.setScreen(new MenuPrincipal(juego));
+                }
             }
         }
-        //TODO COMPROBAR SI EL JEFE TOCA AL PROTA
+        if (boss.rectangulo.overlaps(prota.rectangulo)) {
+            juego.setScreen(new MenuPrincipal(juego));
+        }
     }
 
 
@@ -211,7 +238,7 @@ public class SegundoNivel implements Screen {
         }
         juego.batch.end();
     }
-    
+
 
     @Override
     public void resize(int width, int height) {
@@ -230,7 +257,8 @@ public class SegundoNivel implements Screen {
 
     @Override
     public void hide() {
-
+        if(musica.isPlaying())
+            musica.stop();
     }
 
     @Override

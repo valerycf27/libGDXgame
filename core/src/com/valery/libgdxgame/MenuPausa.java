@@ -4,29 +4,28 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.kotcrab.vis.ui.VisUI;
-import com.kotcrab.vis.ui.widget.VisImageButton;
-import com.kotcrab.vis.ui.widget.VisLabel;
 import com.kotcrab.vis.ui.widget.VisTable;
 import com.kotcrab.vis.ui.widget.VisTextButton;
 
-public class MenuPrincipal implements Screen {
+public class MenuPausa implements Screen {
 
     Stage stage;
     Juego juego;
+    MyGame game;
 
-    public MenuPrincipal(Juego juego) {
-        this.juego = juego;
+    public MenuPausa(Juego juego, MyGame game){
+        this.game = game;
+        this.juego= juego;
     }
 
     @Override
     public void show() {
+
         if (!VisUI.isLoaded())
             VisUI.load();
 
@@ -36,29 +35,26 @@ public class MenuPrincipal implements Screen {
         table.setFillParent(true);
         stage.addActor(table);
 
-        //Image playButton = new Image(new Texture(Gdx.files.internal("Screen/Classic/play_button.png")));
-        VisTextButton playButton = new VisTextButton("JUGAR");
+        VisTextButton backButton = new VisTextButton("ATRAS");
 
-        playButton.addListener(new ClickListener() {
+        backButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                juego.setScreen(new MyGame(juego));
+                juego.setScreen(game);
+
                 VisUI.dispose();
             }
         });
 
-        //Image configButton = new Image(new Texture(Gdx.files.internal("Screen/Classic/options_button.png")));
-        VisTextButton configButton = new VisTextButton("OPCIONES");
+        VisTextButton menuPrincipal = new VisTextButton("MENU");
 
-        configButton.addListener(new ClickListener() {
+        menuPrincipal.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                juego.setScreen(new ConfiguracionScreen(juego));
                 VisUI.dispose();
+                juego.setScreen(new MenuPrincipal(juego));
             }
         });
-
-        //Image quitButton = new Image(new Texture(Gdx.files.internal("Screen/Classic/exit_button.png")));
 
         VisTextButton quitButton = new VisTextButton("SALIR");
 
@@ -72,27 +68,29 @@ public class MenuPrincipal implements Screen {
 
         // Añade filas a la tabla y añade los componentes
         table.row();
-        table.add(playButton);
+        table.add(backButton);
         table.row();
-        table.add(configButton);
+        table.add(menuPrincipal);
         table.row();
         table.add(quitButton);
 
         Gdx.input.setInputProcessor(stage);
+
     }
 
     @Override
-    public void render(float dt) {
+    public void render(float delta) {
         Gdx.gl.glClearColor(1, 1, 1, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // Pinta la UI en la pantalla
-        stage.act(dt);
+        stage.act(delta);
         stage.draw();
     }
 
     @Override
     public void resize(int width, int height) {
+
     }
 
     @Override
@@ -112,5 +110,6 @@ public class MenuPrincipal implements Screen {
 
     @Override
     public void dispose() {
+
     }
 }
