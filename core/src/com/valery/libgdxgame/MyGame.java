@@ -42,8 +42,11 @@ public class MyGame implements Screen {
     Sound sonidoDisparo;
 
 
-    public MyGame(Juego juego) {
+    public MyGame(Juego juego, Array<TextureRegion> textureRegionArrayProtaDerecha, Array<TextureRegion> textureRegionArrayProtaIzquierda) {
         this.juego = juego;
+
+        this.textureRegionArrayProtaDerecha = textureRegionArrayProtaDerecha;
+        this.textureRegionArrayProtaIzquierda = textureRegionArrayProtaIzquierda;
 
         inicializarTexturas();
         balaArray = new Array<>();
@@ -68,14 +71,6 @@ public class MyGame implements Screen {
     }
 
     private void inicializarTexturas() {
-
-        textureRegionArrayProtaDerecha.add(new Sprite(new Texture(Gdx.files.internal("Animaciones/protaVerde1.png"))));
-        textureRegionArrayProtaDerecha.add(new Sprite(new Texture(Gdx.files.internal("Animaciones/protaVerde2.png"))));
-        textureRegionArrayProtaDerecha.add(new Sprite(new Texture(Gdx.files.internal("Animaciones/protaVerde3.png"))));
-
-        textureRegionArrayProtaIzquierda.add(new Sprite(new Texture(Gdx.files.internal("Animaciones/protaVerde1R.png"))));
-        textureRegionArrayProtaIzquierda.add(new Sprite(new Texture(Gdx.files.internal("Animaciones/protaVerde2R.png"))));
-        textureRegionArrayProtaIzquierda.add(new Sprite(new Texture(Gdx.files.internal("Animaciones/protaVerde3R.png"))));
 
         textureRegionArrayBala.add(new Sprite(new Texture(Gdx.files.internal("Animaciones/Fuego/llama.png"))));
 
@@ -428,12 +423,12 @@ public class MyGame implements Screen {
 
     @Override
     public void hide() {
-
+        if(musica.isPlaying())
+            musica.stop();
     }
 
     @Override
     public void dispose() {
-        //batch.dispose();
 
     }
 }

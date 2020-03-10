@@ -36,13 +36,14 @@ public class MenuPrincipal implements Screen {
         table.setFillParent(true);
         stage.addActor(table);
 
+
         //Image playButton = new Image(new Texture(Gdx.files.internal("Screen/Classic/play_button.png")));
         VisTextButton playButton = new VisTextButton("JUGAR");
 
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                juego.setScreen(new MyGame(juego));
+                juego.setScreen(new ElegirPersonajeScreen(juego));
                 VisUI.dispose();
             }
         });

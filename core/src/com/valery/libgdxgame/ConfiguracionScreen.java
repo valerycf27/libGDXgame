@@ -35,6 +35,7 @@ public class ConfiguracionScreen implements Screen {
         table.setFillParent(true);
         stage.addActor(table);
 
+
         final VisCheckBox checkBoxSonido = new VisCheckBox("Sonido Activado", ConfigurationManager.isSoundEnabled());
 
         checkBoxSonido.addListener(new ChangeListener() {
