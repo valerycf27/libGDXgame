@@ -48,7 +48,7 @@ public class ConfiguracionScreen implements Screen {
         });
 
 
-        VisTextButton volver = new VisTextButton("VOLVER");
+        Image volver = new Image(new Texture(Gdx.files.internal("Botones/btVolver.png")));
         volver.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

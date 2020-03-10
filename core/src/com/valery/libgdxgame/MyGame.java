@@ -64,10 +64,6 @@ public class MyGame implements Screen {
         sonidoDisparo = Gdx.audio.newSound(Gdx.files.internal("Sonido/disparo.mp3"));
         musica = Gdx.audio.newMusic(Gdx.files.internal("Sonido/Musica.ogg"));
 
-        if (ConfigurationManager.isSoundEnabled()) {
-            musica.setLooping(true);
-            musica.play();
-        }
     }
 
     private void inicializarTexturas() {
@@ -91,7 +87,10 @@ public class MyGame implements Screen {
 
     @Override
     public void show() {
-
+        if (ConfigurationManager.isSoundEnabled()) {
+            musica.setLooping(true);
+            musica.play();
+        }
     }
 
     @Override
@@ -169,7 +168,7 @@ public class MyGame implements Screen {
             if (enemigo.getVida() <= 0) {
                 enemigoArray.removeValue(enemigo, true);
                 prota.setPuntos(prota.getPuntos() + 1);
-                if (prota.getPuntos() == 5) {
+                if (prota.getPuntos() == 2) {
                     if (musica.isPlaying())
                         musica.stop();
                     juego.setScreen(new SegundoNivel(juego, prota));

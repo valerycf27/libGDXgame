@@ -35,9 +35,9 @@ public class MenuPausa implements Screen {
         table.setFillParent(true);
         stage.addActor(table);
 
-        VisTextButton backButton = new VisTextButton("ATRAS");
+        Image volver = new Image(new Texture(Gdx.files.internal("Botones/btVolver.png")));
 
-        backButton.addListener(new ClickListener() {
+        volver.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 juego.setScreen(game);
@@ -46,7 +46,7 @@ public class MenuPausa implements Screen {
             }
         });
 
-        VisTextButton menuPrincipal = new VisTextButton("MENU");
+        Image menuPrincipal = new Image(new Texture(Gdx.files.internal("Botones/btMprincipal.png")));
 
         menuPrincipal.addListener(new ClickListener() {
             @Override
@@ -56,7 +56,7 @@ public class MenuPausa implements Screen {
             }
         });
 
-        VisTextButton quitButton = new VisTextButton("SALIR");
+        Image quitButton = new Image(new Texture(Gdx.files.internal("Botones/btSalir.png")));
 
         quitButton.addListener(new ClickListener() {
             @Override
@@ -68,7 +68,7 @@ public class MenuPausa implements Screen {
 
         // Añade filas a la tabla y añade los componentes
         table.row();
-        table.add(backButton);
+        table.add(volver);
         table.row();
         table.add(menuPrincipal);
         table.row();

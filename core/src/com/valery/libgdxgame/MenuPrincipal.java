@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.kotcrab.vis.ui.VisUI;
@@ -36,10 +37,7 @@ public class MenuPrincipal implements Screen {
         table.setFillParent(true);
         stage.addActor(table);
 
-
-        //Image playButton = new Image(new Texture(Gdx.files.internal("Screen/Classic/play_button.png")));
-        VisTextButton playButton = new VisTextButton("JUGAR");
-
+        Image playButton = new Image(new Texture(Gdx.files.internal("Botones/btJugar.png")));
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -48,8 +46,7 @@ public class MenuPrincipal implements Screen {
             }
         });
 
-        //Image configButton = new Image(new Texture(Gdx.files.internal("Screen/Classic/options_button.png")));
-        VisTextButton configButton = new VisTextButton("OPCIONES");
+        Image configButton = new Image(new Texture(Gdx.files.internal("Botones/btConfiguracion.png")));
 
         configButton.addListener(new ClickListener() {
             @Override
@@ -59,10 +56,7 @@ public class MenuPrincipal implements Screen {
             }
         });
 
-        //Image quitButton = new Image(new Texture(Gdx.files.internal("Screen/Classic/exit_button.png")));
-
-        VisTextButton quitButton = new VisTextButton("SALIR");
-
+        Image quitButton = new Image(new Texture(Gdx.files.internal("Botones/btSalir.png")));
         quitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {

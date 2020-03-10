@@ -98,11 +98,11 @@ public class ElegirPersonajeScreen implements Screen {
 
         // Añade filas a la tabla y añade los componentes
         table.row();
-        table.add(protaVerde).width(150).height(150);
+        table.add(protaVerde).width(130).height(130);
         table.row();
-        table.add(minotauro).width(150).height(150);
+        table.add(minotauro).width(150).height(160);
         table.row();
-        table.add(vikingo).width(150).height(150);
+        table.add(vikingo).width(120).height(120);
 
         Gdx.input.setInputProcessor(stage);
     }
